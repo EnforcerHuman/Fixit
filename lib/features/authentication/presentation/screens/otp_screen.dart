@@ -1,5 +1,4 @@
 import 'package:fixit/common/common_widgets/button.dart';
-import 'package:fixit/features/authentication/data/datasources/firebase_phone_auth_services.dart';
 import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:fixit/features/authentication/presentation/widgets/otp_sending.dart';
@@ -38,6 +37,7 @@ class OtpScreen extends StatelessWidget {
             context
                 .read<UserBloc>()
                 .add(UpdateUserId(state.userCredential.user!.uid));
+            context.read<UserBloc>().add(SubmitUserDate());
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (ctx) => HomeScreen()),
                 (route) => false);

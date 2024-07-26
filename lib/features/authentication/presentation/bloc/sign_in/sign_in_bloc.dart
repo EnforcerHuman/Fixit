@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/features/authentication/data/datasources/firebase_google_aauth_services.dart';
 import 'package:fixit/features/authentication/data/datasources/firebase_phone_auth_services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:fixit/features/authentication/domain/usecase/sign_in_use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'sign_in_event.dart';
@@ -18,27 +18,27 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     });
 
     on<SignInUser>((event, emit) async {
+      print('called signin user');
+      SignInUseCase signnInUseCase = SignInUseCase();
+
       emit(SignInProcessing());
       try {
         UserCredential userCredential =
-            await auth.login(event.email, event.password);
-        await Future.delayed(Duration(seconds: 5));
-        emit(SignInSuccess(userCredential));
-      } on FirebaseAuthException catch (e) {
-        String errorMessage;
-        if (e.code == 'user-not-found') {
-          errorMessage = 'No user found for that email.';
-        } else if (e.code == 'wrong-password') {
-          errorMessage = 'Wrong password provided for that user.';
+            await signnInUseCase.signIn(event.email, event.password);
+
+        bool isUser = await signnInUseCase.handleSignInSuccesss(userCredential);
+        print('Is user valid: $isUser');
+        if (isUser) {
+          emit(SignInSuccess(isUser));
         } else {
-          errorMessage = 'An error occurred: ${e.message}';
+          emit(SignInError('User not found or not valid'));
         }
-        emit(SignInError(errorMessage));
       } catch (e) {
-        await Future.delayed(Duration(seconds: 5));
+        print('Error during sign in: $e');
         emit(SignInError(e.toString()));
       }
     });
+
     on<SignInWithGoogle>((event, emit) async {
       emit(GoogleSignInProcessing());
       try {
@@ -48,5 +48,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         emit(GoogleSignInError(e.toString()));
       }
     });
+    //
   }
 }

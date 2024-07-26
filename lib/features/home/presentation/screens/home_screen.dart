@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    DbFunction db = DbFunction();
+    // DbFunction db = DbFunction();
 
     return Scaffold(
       body: Center(

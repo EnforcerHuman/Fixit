@@ -28,3 +28,9 @@ class UpdateUserId extends UserEvent {
 }
 
 class SubmitUserDate extends UserEvent {}
+
+class UpdateIsServiceProvider extends UserEvent {
+  final bool isServiceProvider;
+
+  UpdateIsServiceProvider(this.isServiceProvider);
+}

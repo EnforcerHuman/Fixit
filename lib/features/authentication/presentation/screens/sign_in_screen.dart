@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/common/color_extension.dart';
 import 'package:fixit/common/common_widgets/button.dart';
-import 'package:fixit/features/authentication/data/datasources/auth_local%20_data_service.dart';
-import 'package:fixit/features/authentication/data/datasources/firebase_google_aauth_services.dart';
-import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.dart';
+import 'package:fixit/features/authentication/domain/usecase/handle_sign_in.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'package:fixit/features/authentication/presentation/screens/sign_up_screen.dart';
 import 'package:fixit/features/authentication/presentation/widgets/otp_sending.dart';
-import 'package:fixit/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +18,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    GoogleAuth gauth = GoogleAuth();
+    // GoogleAuth gauth = GoogleAuth();
+    HandleAuthResultUseCase handleAuthResultUseCase =
+        HandleAuthResultUseCaseImpl();
 
     return Scaffold(
       appBar: AppBar(
@@ -29,27 +28,14 @@ class LoginScreen extends StatelessWidget {
       ),
       body: BlocConsumer<SignInBloc, SignInState>(
         listener: (context, state) async {
-          print('state is : $state');
           if (state is SignInSuccess) {
-            await AuthLocalDataService.setLoginStatus(true);
-            await AuthLocalDataService.setUserKey(
-                state.userCredential.user!.uid);
-            // ignore: use_build_context_synchronously
-            context.read<UserBloc>().add(SubmitUserDate());
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctc) => HomeScreen()),
-                (route) => false);
+            handleAuthResultUseCase.onSignInSuccess(context);
           } else if (state is SignInError) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+            handleAuthResultUseCase.onSignInError(context, state.error);
           } else if (state is GoogleSignInError) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
+            handleAuthResultUseCase.onGoogleSignInError(context, state.error);
           } else if (state is GoogleSignInSucess) {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctc) => HomeScreen()),
-                (route) => false);
+            handleAuthResultUseCase.onGoogleSignInSuccess(context);
           }
         },
         builder: (context, state) {
@@ -183,7 +169,7 @@ class LoginScreen extends StatelessWidget {
                       height: 20,
                     ),
                     state is GoogleSignInProcessing
-                        ? OtpSending(message: 'Loging in')
+                        ? const OtpSending(message: 'Loging in')
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [

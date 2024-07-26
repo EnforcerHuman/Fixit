@@ -148,6 +148,8 @@ class SignUpScreen extends StatelessWidget {
                                             UpdateEmail(emailecontroller.text));
                                         context.read<UserBloc>().add(
                                             UpdatePhone(phonecontroller.text));
+                                        context.read<UserBloc>().add(
+                                            UpdateIsServiceProvider(false));
                                         context.read<SignUpBloc>().add(
                                             SendOTPEvent(
                                                 phonecontroller.text,

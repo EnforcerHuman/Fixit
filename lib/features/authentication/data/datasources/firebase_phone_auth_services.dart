@@ -2,54 +2,22 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fixit/DB/db_functions.dart';
 import 'package:fixit/controllers/user_controller.dart';
+import 'package:fixit/features/authentication/data/datasources/firestore_data_services.dart';
 import 'package:fixit/features/authentication/data/model/user_model.dart';
-import 'package:fixit/features/home/presentation/screens/home_screen.dart';
-import 'package:flutter/material.dart';
 
 String verId = '';
 
 class PhoneAuthentication {
-  DbFunction db = DbFunction();
   createUser usercreation = createUser();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // Logic to send OTP
-  // Future<void> sendOTPcode(
-  //     String phone, Function(String) oncodesent, context) async {
-  //   await _auth.verifyPhoneNumber(
-  //     timeout: Duration(seconds: 40),
-  //     phoneNumber: "+91$phone",
-  //     verificationCompleted: (credential) {
-  //       print('Verification completed automatically');
-  //     },
-  //     verificationFailed: (e) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Verification failed: ${e.message}')),
-  //       );
-  //       print(e.message);
-  //     },
-  //     codeSent: (verificationId, responseToken) {
-  //       oncodesent(verificationId);
-  //       verId = verificationId;
-  //       print(verId);
-  //     },
-  //     codeAutoRetrievalTimeout: (verificationId) {
-  //       print('Auto retrieval timeout: $verificationId');
-  //     },
-  //   );
-
-  //   print('OTP sent');
-  // }
+  FirestoreDataServices firestoreDataServices = FirestoreDataServices();
 
   Future<String> sendOTP(String phone) async {
     Completer<String> completer = Completer();
-    print('Sending OTP started..........');
     await _auth.verifyPhoneNumber(
       phoneNumber: "+91$phone	",
-      timeout: Duration(seconds: 40),
+      timeout: const Duration(seconds: 40),
       verificationCompleted: (credential) {
         print('Verification completed automatically');
       },
@@ -116,38 +84,31 @@ class PhoneAuthentication {
   }
 
   Future<UserCredential> login(String email, String password) async {
-    UserCredential? userCredential;
     try {
       // Attempt to sign in with email and password
-      userCredential = await _auth.signInWithEmailAndPassword(
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // Map<String, dynamic>? user =
-      //     await db.getUserDetailsById(userCredential.user!.uid);
-      // if (user!['name'] == 'Ananya') {
-      //   print('YOur LOGIC IS CORRECT');
-      // }
-      // If successful, navigate to the home screen
-      print('User logged in successfully');
+      return userCredential;
     } on FirebaseAuthException catch (e) {
-      String errorMessage;
-      if (e.code == 'user-not-found') {
-        errorMessage = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        errorMessage = 'Wrong password provided for that user.';
-      } else {
-        errorMessage = 'An error occurred: ${e.message}';
-      }
+      String errorMessage = _getFirebaseAuthErrorMessage(e);
       print(errorMessage);
-
-      rethrow;
+      throw errorMessage; // Throw a string instead of rethrowing the exception
     } catch (e) {
-      print('Unexpected error: $e');
-
-      rethrow;
+      throw 'An unexpected error occurred. Please try again.';
     }
-    return userCredential;
+  }
+
+  String _getFirebaseAuthErrorMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return 'No user found for that email.';
+      case 'wrong-password':
+        return 'Wrong password provided for that user.';
+      default:
+        return 'An error occurred: ${e.message}';
+    }
   }
 
   Future<void> sendPasswordResetEmail(String email) async {

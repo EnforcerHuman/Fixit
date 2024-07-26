@@ -7,9 +7,10 @@ final class SignInInitial extends SignInState {}
 
 class SignInProcessing extends SignInState {}
 
+// ignore: must_be_immutable
 class SignInSuccess extends SignInState {
-  UserCredential userCredential;
-  SignInSuccess(this.userCredential);
+  final bool isUser;
+  SignInSuccess(this.isUser);
 }
 
 class SignInError extends SignInState {
