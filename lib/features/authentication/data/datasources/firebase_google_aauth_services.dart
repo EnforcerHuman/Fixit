@@ -4,6 +4,56 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuth {
+  // Future<User?> signUpWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  //     if (googleUser == null) return null;
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     // Check if the user already exists in Firestore
+  //     final userDoc = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .where('email', isEqualTo: googleUser.email)
+  //         .get();
+
+  //     if (userDoc.docs.isNotEmpty) {
+  //       // User already exists
+  //       print('User already exists');
+  //       return null;
+  //     }
+
+  //     // If user doesn't exist, proceed with sign up
+  //     final UserCredential userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+
+  //     final User? user = userCredential.user;
+
+  //     return user;
+  //   } catch (e) {
+  //     print('Error during Google sign up: $e');
+  //     return null;
+  //   }
+  // }
+
+  // if (user != null) {
+  //   // Create new user document in Firestore
+  //   await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+  //     'name': user.displayName,
+  //     'email': user.email,
+  //     'photoUrl': user.photoURL,
+  //     'createdAt': FieldValue.serverTimestamp(),
+  //   });
+  //   print('New user created and stored in Firestore');
+  // }
+
   Future<User?> signUpWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -18,7 +68,6 @@ class GoogleAuth {
         idToken: googleAuth.idToken,
       );
 
-      // Check if the user already exists in Firestore
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: googleUser.email)
@@ -26,7 +75,7 @@ class GoogleAuth {
 
       if (userDoc.docs.isNotEmpty) {
         // User already exists
-        print('User already exists');
+        print('User already exists with email: ${googleUser.email}');
         return null;
       }
 
@@ -36,23 +85,13 @@ class GoogleAuth {
 
       final User? user = userCredential.user;
 
-      if (user != null) {
-        // Create new user document in Firestore
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'name': user.displayName,
-          'email': user.email,
-          'photoUrl': user.photoURL,
-          'createdAt': FieldValue.serverTimestamp(),
-        });
-        print('New user created and stored in Firestore');
-      }
-
       return user;
     } catch (e) {
       print('Error during Google sign up: $e');
       return null;
     }
   }
+
   //Login with google
 
   Future<void> loginWithGoogle() async {

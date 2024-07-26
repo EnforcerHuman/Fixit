@@ -16,7 +16,7 @@ class ForgotPasswordBloc
       emit(ResetLinkSending());
       try {
         authRemoteDataSource.sendPasswordResetEmail(event.email);
-        await Future.delayed(Duration(seconds: 4));
+        await Future.delayed(const Duration(seconds: 4));
         emit(ResetLinkSent());
       } catch (e) {
         emit(ResetLinkSentFailed(e.toString()));
