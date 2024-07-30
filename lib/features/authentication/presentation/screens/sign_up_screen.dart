@@ -1,10 +1,11 @@
 import 'package:fixit/common/common_widgets/button.dart';
 import 'package:fixit/features/authentication/domain/usecase/handle_sign_up.dart';
 import 'package:fixit/features/authentication/domain/usecase/handle_sign_up_result.dart';
+import 'package:fixit/features/authentication/domain/usecase/validation_methods.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:fixit/features/authentication/presentation/screens/sign_in_screen.dart';
+import 'package:fixit/features/authentication/presentation/widgets/Text_editing_field.dart';
 import 'package:fixit/features/authentication/presentation/widgets/divider_widget.dart';
-import 'package:fixit/features/authentication/presentation/widgets/email_field.dart';
 import 'package:fixit/features/authentication/presentation/widgets/google_button.dart';
 import 'package:fixit/features/authentication/presentation/widgets/name_field.dart';
 import 'package:fixit/features/authentication/presentation/widgets/otp_sending.dart';
@@ -66,7 +67,11 @@ class SignUpScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             PhoneNumberField(phonecontroller: phonecontroller),
                             const SizedBox(height: 25),
-                            EmailField(emailcontroller: emailcontroller),
+                            TextEditingField(
+                                prefixIcon: const Icon(Icons.email),
+                                controller: emailcontroller,
+                                hintText: 'enter your email',
+                                validation: ValidationMethods.validateEmail),
                             const SizedBox(height: 25),
                             PasswordField(
                                 passwordcontroller: passwordcontroller),

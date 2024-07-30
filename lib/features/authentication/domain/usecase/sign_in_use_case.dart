@@ -24,6 +24,7 @@ class SignInUseCase {
       AuthLocalDataService.setLoginStatus(true);
       AuthLocalDataService.setUserKey(userDetails?['id']);
     }
+
     return userDetails?['isServiceProvider'] ?? false;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuth {
@@ -75,7 +74,6 @@ class GoogleAuth {
 
       if (userDoc.docs.isNotEmpty) {
         // User already exists
-        print('User already exists with email: ${googleUser.email}');
         return null;
       }
 
@@ -87,7 +85,6 @@ class GoogleAuth {
 
       return user;
     } catch (e) {
-      print('Error during Google sign up: $e');
       return null;
     }
   }
@@ -129,7 +126,6 @@ class GoogleAuth {
             await GoogleSignIn().signOut();
           } else {
             // User exists, do something like navigate to next page
-            print('User logged in: ${userCredential.user?.displayName}');
             // ScaffoldMessenger.of(context).showSnackBar(
             //   SnackBar(
             //     content: Text('Logged in'),
@@ -140,7 +136,6 @@ class GoogleAuth {
           }
         } on FirebaseAuthException catch (e) {
           // Handle Firebase Auth specific errors
-          print('Firebase Auth Error: ${e.message}');
           // ScaffoldMessenger.of(context).showSnackBar(
           //   SnackBar(
           //     content: Text('Login failed: ${e.message}'),
@@ -150,11 +145,9 @@ class GoogleAuth {
         }
       } else {
         // Handle case where user cancels sign-in
-        print('User cancelled sign-in.');
       }
     } catch (e) {
       // Handle other errors
-      print('Error logging in with Google: $e');
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
       //     content: Text('An error occurred. Please try again.'),

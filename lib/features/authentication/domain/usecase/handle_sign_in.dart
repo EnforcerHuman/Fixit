@@ -11,7 +11,6 @@ abstract class HandleAuthResultUseCase {
 class HandleAuthResultUseCaseImpl implements HandleAuthResultUseCase {
   @override
   void onSignInSuccess(BuildContext context) {
-    print('Sign in success');
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (ctx) => const HomeScreen()),
       (route) => false,
