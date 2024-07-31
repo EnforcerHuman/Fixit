@@ -70,6 +70,8 @@ import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigati
 import 'package:fixit/features/main_navigation/presentation/screens/main_screen.dart';
 import 'package:fixit/features/service_provider/data/data_sources.dart/service_provider_data_source.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/bloc/service_provider_bloc.dart';
+import 'package:fixit/features/services/data/data_sources/service_remote_repository.dart';
+import 'package:fixit/features/services/presentation/bloc/services_bloc/services_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -104,7 +106,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 ServiceProviderBloc(ServiceProviderDataSource())
-                  ..add(GetServiceProvider()))
+                  ..add(GetServiceProvider())),
+        BlocProvider(
+            create: (context) =>
+                ServicesBloc(ServiceRemoteRepository())..add(GetServices()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

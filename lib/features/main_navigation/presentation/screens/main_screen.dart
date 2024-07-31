@@ -4,6 +4,7 @@ import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigati
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_event.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_state.dart';
 import 'package:fixit/features/service_provider/presentation/screen/service_provider_listing_screen.dart';
+import 'package:fixit/features/services/presentation/screens/service_listing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/bottom_nav_bar.dart';
@@ -23,8 +24,8 @@ class MainScreen extends StatelessWidget {
 class MainScreenContent extends StatelessWidget {
   final List<Widget> _pages = [
     const HomeScreen(),
-    ServiceProviderListingScreen(),
-    const ChatScreen()
+    const ServiceProviderListingScreen(),
+    const ServiceListingScreen()
   ];
 
   MainScreenContent({super.key});

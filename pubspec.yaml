@@ -43,6 +43,7 @@ dependencies:
   bloc: ^8.1.4
   flutter_animate: ^4.5.0
   shared_preferences: ^2.2.3
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

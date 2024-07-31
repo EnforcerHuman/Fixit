@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
-  final Service service;
+  final String serviceName;
+  final String imageUrl;
 
-  ServiceCard({required this.service});
+  const ServiceCard(
+      {super.key, required this.serviceName, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    List<Service> services = [
-      Service(name: 'Plumbing', image: 'assets/img/Fixit_logo.png'),
-      Service(name: 'Electric work', image: 'assets/img/Fixit_logo.png'),
-      Service(name: 'Solar', image: 'assets/img/Fixit_logo.png'),
-      // Add more services as needed
-    ];
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -24,13 +20,17 @@ class ServiceCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              service.image,
+            Image.network(
+              imageUrl,
               height: 60,
+              errorBuilder: (context, error, stackTrace) {
+                return const Text('no image');
+              },
             ),
             const SizedBox(height: 8),
             Text(
-              service.name,
+              serviceName,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
