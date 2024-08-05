@@ -2,6 +2,7 @@ import 'package:fixit/common/color_extension.dart';
 import 'package:flutter/material.dart';
 
 class RoundTextField extends StatefulWidget {
+  final int? maxLines;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final String hintText;
@@ -26,7 +27,8 @@ class RoundTextField extends StatefulWidget {
       this.validator,
       this.onChanged,
       this.errortext,
-      this.defaultvalue});
+      this.defaultvalue,
+      this.maxLines});
 
   @override
   State<RoundTextField> createState() => _RoundTextFieldState();
@@ -56,6 +58,7 @@ class _RoundTextFieldState extends State<RoundTextField> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: TextField(
+              maxLines: widget.maxLines,
               controller: widget.controller,
               keyboardType: widget.keyboardType,
               obscureText: widget.obscureText,

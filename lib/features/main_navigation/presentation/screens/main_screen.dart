@@ -1,10 +1,11 @@
+import 'package:fixit/features/Profile/presentation/screens/profile_screen.dart';
+import 'package:fixit/features/bookings/presentation/screens/all_bookings_screen.dart';
 import 'package:fixit/features/chats/presentation/screens/chat_screen.dart';
 import 'package:fixit/features/home/presentation/screens/home_screen.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_bloc.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_event.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_state.dart';
-import 'package:fixit/features/service_provider/presentation/screen/service_provider_listing_screen.dart';
-import 'package:fixit/features/services/presentation/screens/service_listing_screen.dart';
+import 'package:fixit/features/service_provider/presentation/screen/search_by_location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/bottom_nav_bar.dart';
@@ -23,9 +24,11 @@ class MainScreen extends StatelessWidget {
 
 class MainScreenContent extends StatelessWidget {
   final List<Widget> _pages = [
-    const HomeScreen(),
-    const ServiceProviderListingScreen(),
-    const ServiceListingScreen()
+    HomeScreen(),
+    const SearchByLocationScreen(),
+    const AllBookingsScreen(),
+    const ChatScreen(),
+    const ProfileScreen(),
   ];
 
   MainScreenContent({super.key});

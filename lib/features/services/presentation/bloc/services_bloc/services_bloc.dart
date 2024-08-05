@@ -16,7 +16,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     on<GetServices>((event, emit) async {
       emit(ServicesLoading());
       try {
-        await emit.forEach<List<Service>>(serviceRemoteRepository.getServices(),
+        await emit.forEach<List<ServicesModel>>(
+            serviceRemoteRepository.getServices(),
             onData: (Services) => ServicesLoaded(Services));
         onError(error, stackTrace) => ServicesError(error.toString());
       } catch (e) {

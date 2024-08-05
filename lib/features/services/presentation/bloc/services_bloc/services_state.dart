@@ -8,7 +8,7 @@ final class ServicesInitial extends ServicesState {}
 final class ServicesLoading extends ServicesState {}
 
 final class ServicesLoaded extends ServicesState {
-  final List<Service> services;
+  final List<ServicesModel> services;
 
   ServicesLoaded(this.services);
 }

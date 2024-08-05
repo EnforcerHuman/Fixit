@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     isLogged = await AuthLocalDataService.getLoggedInstatus();
     if (isLogged) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (ctx) => const HomeScreen()),
+        MaterialPageRoute(builder: (ctx) => HomeScreen()),
         (route) => false,
       );
     } else {

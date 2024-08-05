@@ -1,128 +1,79 @@
+import 'package:fixit/common/common_widgets/button.dart';
+import 'package:fixit/features/service_provider/domain/usecases/details_screen_use_cases.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/provider_detail_screen_widgets/bio_section.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/provider_detail_screen_widgets/provider_app_bar.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/provider_detail_screen_widgets/provider_info_section.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/provider_detail_screen_widgets/provider_stats_section.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/provider_detail_screen_widgets/skill_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fixit/features/service_provider/presentation/bloc/provider_details_bloc/provider_details_bloc.dart';
 
-class ServiceProviderProfile extends StatelessWidget {
+class PlumberProfileScreen extends StatelessWidget {
+  final String id;
+
+  const PlumberProfileScreen({super.key, required this.id});
+
   @override
   Widget build(BuildContext context) {
+    ProviderDetailsScreenUseCases providerDetailsScreenUseCases =
+        ProviderDetailsScreenUseCases();
+    context.read<ProviderDetailsBloc>().add(GetProviderDetails(id));
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
+      body: BlocBuilder<ProviderDetailsBloc, ProviderDetailsState>(
+        builder: (context, state) {
+          if (state is ProviderDetailsLoaded) {
+            return _buildLoadedContent(
+                context, state, providerDetailsScreenUseCases);
+          } else if (state is ProviderDetailsError) {
+            return const Center(child: Text('Some error occurred'));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                    'https://c7.alamy.com/comp/J8JE7P/woman-lady-female-standing-plumber-plumbing-workers-laborer-worker-J8JE7P.jpg',
-                  ),
-                ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Emily Jani',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Plumber',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber),
-                        Text('4.8'),
-                        SizedBox(width: 16),
-                        Text('56 Orders'),
-                        SizedBox(width: 16),
-                        Text('4 Years'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Skills',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+    );
+  }
+
+  Widget _buildLoadedContent(BuildContext context, ProviderDetailsLoaded state,
+      ProviderDetailsScreenUseCases providerDetailsScreenUseCases) {
+    var media = MediaQuery.of(context).size;
+    return CustomScrollView(
+      slivers: [
+        ProviderAppBar(
+            imageUrl: state.providerDetails['profileImage'], media: media),
+        SliverToBoxAdapter(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white10,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    Icon(Icons.kitchen, size: 40),
-                    Text('Sink'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.shower, size: 40),
-                    Text('Shower'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.healing, size: 40),
-                    Text('Boiler'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.wc, size: 40),
-                    Text('Toilet'),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Add your booking functionality here
-                },
-                child: Text('Book'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ProviderInfoSection(providerDetails: state.providerDetails),
+                  const SizedBox(height: 16),
+                  ProviderStatsSection(providerDetails: state.providerDetails),
+                  const SizedBox(height: 16),
+                  const SkillsSection(),
+                  const SizedBox(height: 16),
+                  RoundButton(
+                      title: 'Book',
+                      onPressed: () => providerDetailsScreenUseCases
+                          .handleBookButtonPress(context, state)),
+                  const SizedBox(height: 16),
+                  BioSection(bio: state.providerDetails['info']),
+                ],
               ),
             ),
-            SizedBox(height: 16),
-            Text(
-              'Bio',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              "I'm Emily Jani, a dedicated plumbing professional with a passion for delivering top-notch service to ensure your home's plumbing runs smoothly. With nine years of hands-on experience.",
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

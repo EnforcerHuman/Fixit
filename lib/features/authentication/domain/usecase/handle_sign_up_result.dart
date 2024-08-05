@@ -13,8 +13,7 @@ class HandleSignUpResultCase {
     context.read<UserBloc>().add(UpdatePhone(user.phoneNumber ?? ''));
     context.read<UserBloc>().add(SubmitUserDate());
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (ctx) => const HomeScreen()),
-        (route) => false);
+        MaterialPageRoute(builder: (ctx) => HomeScreen()), (route) => false);
   }
 
   void onGoogleSignUpFailed(context, String errorMessage) {

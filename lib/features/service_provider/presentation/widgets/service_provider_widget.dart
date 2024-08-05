@@ -76,7 +76,7 @@ class ServiceProviderCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                // Rating and Button
+                //rating
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

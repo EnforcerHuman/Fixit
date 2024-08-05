@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fixit/features/authentication/data/datasources/user_repo.dart';
 import 'package:fixit/features/authentication/data/model/user_model.dart';
+// ignore: depend_on_referenced_packages
 import 'package:meta/meta.dart';
 
 part 'user_event.dart';

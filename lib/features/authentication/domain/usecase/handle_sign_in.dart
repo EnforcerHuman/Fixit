@@ -12,7 +12,7 @@ class HandleAuthResultUseCaseImpl implements HandleAuthResultUseCase {
   @override
   void onSignInSuccess(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (ctx) => const HomeScreen()),
+      MaterialPageRoute(builder: (ctx) => HomeScreen()),
       (route) => false,
     );
   }

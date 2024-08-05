@@ -13,9 +13,14 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        BottomNavigationBarItem(icon: Icon(Icons.location_city), label: 'City'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_outlined), label: 'Bookings'),
+        BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
       currentIndex: selectedIndex,
