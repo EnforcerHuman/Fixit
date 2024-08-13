@@ -107,7 +107,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LoginScreen()));
+                                                  const LoginScreen()));
                                     }
                                   },
                                   icon: Icon(

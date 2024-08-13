@@ -13,7 +13,6 @@ class ServiceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<ProviderDetailsBloc>().add(GetProviderDetails(id));
     TextEditingController detailsController = TextEditingController();
 
     return Scaffold(
@@ -39,9 +38,10 @@ class ServiceDetailsScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             const Text(
                                 'Provide Specific Instructions or Details'),
-                            const TextField(
+                            TextField(
+                              controller: detailsController,
                               maxLines: 4,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Write here...',
                                 border: OutlineInputBorder(),
                               ),
@@ -59,10 +59,15 @@ class ServiceDetailsScreen extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                         child: RoundButton(
                           title: 'Next',
-                          onPressed: () {
+                          onPressed: () async {
+                            context
+                                .read<BookingBloc>()
+                                .add(UpdateUserName('Melbin'));
                             context
                                 .read<BookingBloc>()
                                 .add(UpdateWorkDetails(detailsController.text));
+                            context.read<BookingBloc>().add(UpdateserviceName(
+                                state.providerDetails['serviceArea']));
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (ctx) =>
                                     const AdressCollectionPage()));

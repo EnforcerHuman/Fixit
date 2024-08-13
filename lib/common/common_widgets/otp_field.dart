@@ -13,7 +13,7 @@ class OtpField extends StatelessWidget {
         child: TextField(
           controller: textcontroller,
           textAlign: TextAlign.center,
-          decoration: InputDecoration(border: OutlineInputBorder()),
+          decoration: const InputDecoration(border: OutlineInputBorder()),
         ),
       ),
     );

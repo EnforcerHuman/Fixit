@@ -1,8 +1,8 @@
 import 'package:fixit/common/common_widgets/cutom_app_bar.dart';
+import 'package:fixit/features/home/presentation/widgets/welcome_widget.dart';
 import 'package:fixit/features/services/presentation/widgets/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fixit/common/common_widgets/custom_search_bar.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/service_provider_bloc/service_provider_bloc.dart';
 import 'package:fixit/features/services/presentation/bloc/services_bloc/services_bloc.dart';
 import 'package:fixit/features/services/presentation/widgets/title_with_button.dart.dart';
@@ -22,12 +22,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomSearchBar(
-              onIconPressed: () {},
-              controller: TextEditingController(),
-              hint: 'Search here..',
-              onSearchChanged: (value) {},
-            ),
+            const WelcomeWidget(),
             const SizedBox(height: 10),
             _buildPopularServices(context),
             const SizedBox(height: 10),

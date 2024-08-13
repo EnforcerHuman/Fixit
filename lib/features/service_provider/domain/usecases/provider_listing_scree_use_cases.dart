@@ -1,0 +1,3 @@
+class ProviderListingScreeUseCases {
+  void onSearchSkilledWorkers() {}
+}

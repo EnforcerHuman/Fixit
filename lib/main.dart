@@ -4,11 +4,19 @@ import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.d
 import 'package:fixit/features/authentication/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_in/sign_in_bloc.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
+import 'package:fixit/features/bookings/data/data_source/booking_remote_data_source.dart';
 import 'package:fixit/features/bookings/data/data_source/get_location.dart';
+import 'package:fixit/features/bookings/domain/use_cases/booking_use_case.dart';
+import 'package:fixit/features/bookings/presentation/bloc/accepted_bookings_bloc/accepted_bookings_bloc.dart';
 import 'package:fixit/features/bookings/presentation/bloc/bookig_bloc/booking_bloc.dart';
+import 'package:fixit/features/bookings/presentation/bloc/completed_booking_bloc/completed_bookings_bloc.dart';
 import 'package:fixit/features/bookings/presentation/bloc/location/location_bloc.dart';
+import 'package:fixit/features/bookings/presentation/bloc/requested_bookings_bloc/requested_bookings_bloc.dart';
+import 'package:fixit/features/bookings/presentation/bloc/top_nav_bar_bloc/top_nav_bar_bloc.dart';
+import 'package:fixit/features/home/presentation/screens/splash_screen.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_bloc.dart';
-import 'package:fixit/features/main_navigation/presentation/screens/main_screen.dart';
+import 'package:fixit/features/payment/data/razor_pay_remote_data_source.dart';
+import 'package:fixit/features/payment/presentation/bloc/bloc/payment_bloc.dart';
 import 'package:fixit/features/service_provider/data/data_sources/service_provider_data_source.dart';
 import 'package:fixit/features/service_provider/data/data_sources/service_provider_search.dart';
 import 'package:fixit/features/service_provider/domain/usecases/filter_provider_by_area.dart';
@@ -78,7 +86,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => ProvidersByLocationBloc(
                 GetProvidersWithinRadius(ServiceProviderDataSource()))),
-        BlocProvider(create: (context) => BookingBloc())
+        BlocProvider(
+            create: (context) => BookingBloc(BookingRemotedataSource())),
+        BlocProvider(
+            create: (context) => RequestedBookingsBloc(BookingUseCase())),
+        BlocProvider(create: (context) => TopNavBarBloc()),
+        BlocProvider(
+            create: (context) => AcceptedBookingsBloc(BookingUseCase())),
+        BlocProvider(create: (context) => PaymentBloc(RazorpayService())),
+        BlocProvider(
+            create: (context) => CompletedBookingsBloc(BookingUseCase()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -87,7 +104,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: const MainScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

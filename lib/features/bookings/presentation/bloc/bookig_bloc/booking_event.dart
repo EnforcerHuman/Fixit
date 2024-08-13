@@ -40,13 +40,13 @@ class UpdateserviceName extends BookingEvent {
 }
 
 class UpdateBookingDateTime extends BookingEvent {
-  final DateTime bookingDate;
+  final String bookingDate;
 
   UpdateBookingDateTime(this.bookingDate);
 }
 
 class UpdateBookingcreatedAt extends BookingEvent {
-  final DateTime bookingCreatedAt;
+  final String bookingCreatedAt;
 
   UpdateBookingcreatedAt(this.bookingCreatedAt);
 }
@@ -74,3 +74,11 @@ class UpdateAdress extends BookingEvent {
 
   UpdateAdress(this.adress);
 }
+
+class UpdateHourlyPayment extends BookingEvent {
+  final String hourlyPayment;
+
+  UpdateHourlyPayment(this.hourlyPayment);
+}
+
+class SubmitBookingData extends BookingEvent {}

@@ -10,3 +10,9 @@ class BookingDataUpdated extends BookingState {}
 class BookingDataUpdationFailed extends BookingState {}
 
 class BookingDataUpdationError extends BookingState {}
+
+class BookingDataSubmited extends BookingState {}
+
+class BookingDataSubmissionFailed extends BookingState {}
+
+class BookingDataSubmitting extends BookingState {}

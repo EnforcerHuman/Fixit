@@ -1,4 +1,3 @@
-import 'package:fixit/features/bookings/domain/use_cases/check_distance.dart';
 import 'package:fixit/features/bookings/presentation/bloc/location/location_bloc.dart';
 import 'package:fixit/features/bookings/presentation/bloc/location/location_event.dart';
 import 'package:fixit/features/bookings/presentation/bloc/location/location_state.dart';
@@ -21,15 +20,15 @@ class LocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CheckDistance _checkDistance = CheckDistance();
+    // final CheckDistance _checkDistance = CheckDistance();
 
     return BlocBuilder<LocationBloc, LocationState>(
       builder: (context, state) {
         if (state is LocationInitial) {
           BlocProvider.of<LocationBloc>(context).add(GetLocationEvent());
-          return Center(child: Text('Getting location...'));
+          return const Center(child: Text('Getting location...'));
         } else if (state is LocationLoading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (state is LocationLoaded || state is LocationSelected) {
           LatLng position;
           if (state is LocationLoaded) {
@@ -45,7 +44,7 @@ class LocationWidget extends StatelessWidget {
             ),
             markers: {
               Marker(
-                markerId: MarkerId('current-location'),
+                markerId: const MarkerId('current-location'),
                 position: position,
               ),
             },
@@ -58,9 +57,9 @@ class LocationWidget extends StatelessWidget {
               //     tappedPosition.latitude, tappedPosition.longitude);
               List<Placemark> placemarks = await placemarkFromCoordinates(
                   tappedPosition.latitude, tappedPosition.longitude);
-              print(placemarks);
 
               // Update the location with the new tapped position
+              // ignore: use_build_context_synchronously
               BlocProvider.of<LocationBloc>(context).add(SelectLocationEvent(
                   tappedPosition,
                   '${placemarks.first.name},${placemarks.first.thoroughfare},${placemarks.first.locality},${placemarks.first.street},${placemarks.first.postalCode}'));

@@ -1,4 +1,5 @@
 import 'package:fixit/features/home/presentation/screens/home_screen.dart';
+import 'package:fixit/features/main_navigation/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 abstract class HandleAuthResultUseCase {
@@ -12,7 +13,7 @@ class HandleAuthResultUseCaseImpl implements HandleAuthResultUseCase {
   @override
   void onSignInSuccess(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (ctx) => HomeScreen()),
+      MaterialPageRoute(builder: (ctx) => MainScreen()),
       (route) => false,
     );
   }

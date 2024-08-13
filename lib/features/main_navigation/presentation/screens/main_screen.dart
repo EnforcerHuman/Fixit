@@ -26,7 +26,7 @@ class MainScreenContent extends StatelessWidget {
   final List<Widget> _pages = [
     HomeScreen(),
     const SearchByLocationScreen(),
-    const AllBookingsScreen(),
+    AllBookingsScreen(),
     const ChatScreen(),
     const ProfileScreen(),
   ];

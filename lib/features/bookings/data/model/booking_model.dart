@@ -9,8 +9,8 @@ class BookingModel {
   final String userContact;
   final String serviceId;
   final String serviceName;
-  final DateTime bookingDateTime;
-  final DateTime createdAt;
+  final String bookingDateTime;
+  final String createdAt;
   final String status;
   final String workDetails;
   final String imageLink;
@@ -25,6 +25,8 @@ class BookingModel {
   final DateTime statusUpdatedAt;
   final String? expectedArrivalTime;
   final AddressModel address;
+  final String hourlyPayment;
+  final String totalPayment;
 
   BookingModel({
     required this.id,
@@ -51,6 +53,8 @@ class BookingModel {
     required this.statusUpdatedAt,
     this.expectedArrivalTime,
     required this.address,
+    required this.hourlyPayment, // Initialize new field
+    required this.totalPayment, // Initialize new field
   });
 
   factory BookingModel.fromMap(Map<String, dynamic> data, String documentId) {
@@ -63,8 +67,8 @@ class BookingModel {
       userContact: data['userContact'] as String,
       serviceId: data['serviceId'] as String,
       serviceName: data['serviceName'] as String,
-      bookingDateTime: DateTime.parse(data['bookingDateTime'] as String),
-      createdAt: DateTime.parse(data['createdAt'] as String),
+      bookingDateTime: data['bookingDateTime'] as String,
+      createdAt: data['createdAt'] as String,
       status: data['status'] as String,
       workDetails: data['workDetails'] as String,
       imageLink: data['imageLink'] as String,
@@ -81,6 +85,8 @@ class BookingModel {
       statusUpdatedAt: DateTime.parse(data['statusUpdatedAt'] as String),
       expectedArrivalTime: data['expectedArrivalTime'] as String?,
       address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
+      hourlyPayment: data['hourlyPayment'] as String, // Map new field
+      totalPayment: data['totalPayment'] as String, // Map new field
     );
   }
 
@@ -93,8 +99,8 @@ class BookingModel {
       'userContact': userContact,
       'serviceId': serviceId,
       'serviceName': serviceName,
-      'bookingDateTime': bookingDateTime.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
+      'bookingDateTime': bookingDateTime,
+      'createdAt': createdAt,
       'status': status,
       'workDetails': workDetails,
       'imageLink': imageLink,
@@ -109,6 +115,8 @@ class BookingModel {
       'statusUpdatedAt': statusUpdatedAt.toIso8601String(),
       'expectedArrivalTime': expectedArrivalTime,
       'address': address.toMap(),
+      'hourlyPayment': hourlyPayment, // Add new field
+      'totalPayment': totalPayment, // Add new field
     };
   }
 
@@ -121,8 +129,8 @@ class BookingModel {
     String? userContact,
     String? serviceId,
     String? serviceName,
-    DateTime? bookingDateTime,
-    DateTime? createdAt,
+    String? bookingDateTime,
+    String? createdAt,
     String? status,
     String? workDetails,
     String? imageLink,
@@ -137,6 +145,8 @@ class BookingModel {
     DateTime? statusUpdatedAt,
     String? expectedArrivalTime,
     AddressModel? address,
+    String? hourlyPayment, // Add new field
+    String? totalPayment, // Add new field
   }) {
     return BookingModel(
       id: id ?? this.id,
@@ -163,6 +173,8 @@ class BookingModel {
       statusUpdatedAt: statusUpdatedAt ?? this.statusUpdatedAt,
       expectedArrivalTime: expectedArrivalTime ?? this.expectedArrivalTime,
       address: address ?? this.address,
+      hourlyPayment: hourlyPayment ?? this.hourlyPayment, // Assign new field
+      totalPayment: totalPayment ?? this.totalPayment, // Assign new field
     );
   }
 }

@@ -35,7 +35,9 @@ class LoginScreen extends StatelessWidget {
       body: BlocConsumer<SignInBloc, SignInState>(
         listener: (context, state) async {
           if (state is SignInSuccess) {
-            handleAuthResultUseCase.onSignInSuccess(context);
+            handleAuthResultUseCase.onSignInSuccess(
+              context,
+            );
           } else if (state is SignInError) {
             handleAuthResultUseCase.onSignInError(context, state.error);
           } else if (state is GoogleSignInError) {

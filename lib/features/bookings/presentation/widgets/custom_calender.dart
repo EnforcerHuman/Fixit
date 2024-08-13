@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class CustomCalendar extends StatefulWidget {
-  @override
-  _CustomCalendarState createState() => _CustomCalendarState();
-}
-
-class _CustomCalendarState extends State<CustomCalendar> {
-  DateTime _selectedDate = DateTime.now();
+// ignore: must_be_immutable
+class CustomCalendar extends StatelessWidget {
+  DateTime selectedDate = DateTime.now();
+  final Function(DateRangePickerSelectionChangedArgs args) onDateChanged;
+  CustomCalendar({super.key, required this.onDateChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -18,27 +16,19 @@ class _CustomCalendarState extends State<CustomCalendar> {
         child: SfDateRangePicker(
           view: DateRangePickerView.month,
           selectionMode: DateRangePickerSelectionMode.single,
-          initialSelectedDate: _selectedDate,
-          onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-            if (args.value is DateTime) {
-              print(args.value.hashCode);
-              setState(() {
-                _selectedDate = args.value;
-                print(_selectedDate);
-              });
-            }
-          },
-          monthViewSettings: DateRangePickerMonthViewSettings(
+          initialSelectedDate: selectedDate,
+          onSelectionChanged: onDateChanged,
+          monthViewSettings: const DateRangePickerMonthViewSettings(
             firstDayOfWeek: 7, // Sunday
             viewHeaderStyle: DateRangePickerViewHeaderStyle(
               textStyle: TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ),
-          headerStyle: DateRangePickerHeaderStyle(
+          headerStyle: const DateRangePickerHeaderStyle(
             textAlign: TextAlign.center,
             textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          monthCellStyle: DateRangePickerMonthCellStyle(
+          monthCellStyle: const DateRangePickerMonthCellStyle(
             textStyle: TextStyle(fontSize: 14, color: Colors.black87),
             todayTextStyle: TextStyle(fontSize: 14, color: Colors.blue),
           ),

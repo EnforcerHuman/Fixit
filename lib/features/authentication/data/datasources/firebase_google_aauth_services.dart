@@ -115,23 +115,13 @@ class GoogleAuth {
           // Check if the user is new
           if (userCredential.additionalUserInfo?.isNewUser ?? false) {
             // User doesn't exist, show SnackBar
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text('User does not exist. Please sign up first.'),
-            //     duration: Duration(seconds: 3),
-            //   ),
-            // );
+
             // Sign out the user since they don't have an account
             await FirebaseAuth.instance.signOut();
             await GoogleSignIn().signOut();
           } else {
             // User exists, do something like navigate to next page
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text('Logged in'),
-            //     duration: Duration(seconds: 3),
-            //   ),
-            // );
+
             // You can add navigation logic here
           }
         } on FirebaseAuthException catch (e) {

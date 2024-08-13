@@ -20,11 +20,13 @@ class SignInUseCase {
     FirestoreDataServices firestoreDataServices = FirestoreDataServices();
     Map<String, dynamic>? userDetails = await firestoreDataServices
         .getUserDetailsById(userCredential.user!.uid);
+    print('**88888888888888888888888');
+    print(userCredential.user?.uid);
+    // AuthLocalDataService.setUserName(userDetails?['id']);
     if (userDetails?['isServiceProvider'] == true) {
       AuthLocalDataService.setLoginStatus(true);
       AuthLocalDataService.setUserKey(userDetails?['id']);
     }
-
     return userDetails?['isServiceProvider'] ?? false;
   }
 }

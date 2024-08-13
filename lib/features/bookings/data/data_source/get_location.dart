@@ -5,7 +5,7 @@ class GetCurrentLocation {
   late GoogleMapController myController;
 
   Future<LatLng> call() async {
-    bool serviceEnabled = true;
+    // bool serviceEnabled = true;
     LocationPermission permission;
 
     permission = await Geolocator.checkPermission();

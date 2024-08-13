@@ -57,25 +57,16 @@ class LocationScreen extends StatelessWidget {
                         latitude, longitude, userLatitude!, userLongitude!);
                     if (isServicable) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => ServiceDetailsScreen(
+                          builder: (ctx) => const ServiceDetailsScreen(
                                 id: '',
                               )));
                     } else {
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   SnackBar(
-                      //     content:
-                      //         Text('Provider is servicable on selected area'),
-                      //     duration: Duration(
-                      //         seconds:
-                      //             2), // Duration for how long the Snackbar will be visible
-                      //   ),
-                      // );
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Service unavailable'),
-                            content: Text(
+                            title: const Text('Service unavailable'),
+                            content: const Text(
                                 'Unfortunately, the selected provider does not service your area. Please try selecting a different provider or check back later.'),
                             actions: <Widget>[
                               TextButton(
@@ -85,7 +76,7 @@ class LocationScreen extends StatelessWidget {
                                 },
                               ),
                               TextButton(
-                                child: Text('See Available Providers'),
+                                child: const Text('See Available Providers'),
                                 onPressed: () {
                                   // Handle the 'Proceed' action
                                   Navigator.of(context).push(MaterialPageRoute(

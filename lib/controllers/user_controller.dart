@@ -18,3 +18,9 @@ class createUser {
     }
   }
 }
+
+
+// import 'dart:math';
+
+// final random = Random.secure();
+// final uniqueId = '${DateTime.now().millisecondsSinceEpoch}${random.nextInt(1000000)}';

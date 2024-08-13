@@ -28,20 +28,13 @@ class _StartingScreenState extends State<StartingScreen> {
           children: [
             const Spacer(),
             Image.asset('assets/img/large_logo.png'),
-            // Text(
-            //   'Fixit',
-            //   style: TextStyle(
-            //       color: Tcolor.black,
-            //       fontSize: 45,
-            //       fontWeight: FontWeight.w700),
-            // ),
             const Spacer(),
             SafeArea(
               child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                   child: ElevatedButton(
-                      child: Text('Get started'),
+                      child: const Text('Get started'),
                       onPressed: () {
                         Navigator.push(
                             context,
