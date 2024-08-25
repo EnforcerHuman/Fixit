@@ -1,8 +1,10 @@
 import 'package:fixit/common/common_widgets/custom_search_bar.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/search_bloc/service_provider_search_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/service_provider_bloc/service_provider_bloc.dart';
+import 'package:fixit/features/service_provider/presentation/bloc/service_provider_sorting_bloc/service_provider_sorting_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/screen/search_by_location_screen.dart';
 import 'package:fixit/features/service_provider/presentation/screen/service_provider_details_screen.dart';
+import 'package:fixit/features/service_provider/presentation/widgets/drop_down.dart';
 import 'package:fixit/features/service_provider/presentation/widgets/service_provider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,30 +22,36 @@ class ServiceProviderListingScreen extends StatelessWidget {
         child: Column(
           children: [
             _buildSearchBar(context, searchController),
-            Expanded(
-              child: BlocBuilder<ServiceProviderSearchBloc,
-                  ServiceProviderSearchState>(
-                builder: (context, searchState) {
-                  if (searchState is SearchCompleted) {
-                    return _buildSearchResults(searchState);
-                  } else if (searchState is SearchError) {
-                    return _buildError('Search Error ');
-                  } else {
-                    return _buildServiceProvidersList();
-                  }
-                },
-              ),
-            ),
+            Expanded(child: _buildBasedOnState()),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildBasedOnState() {
+    return BlocBuilder<ServiceProviderSearchBloc, ServiceProviderSearchState>(
+      builder: (context, searchState) {
+        if (searchState is SearchCompleted) {
+          if (searchState.providers.isEmpty) {
+            return const Center(
+              child: Text('NO RESULTS'),
+            );
+          } else {
+            return _buildSearchResults(searchState);
+          }
+        } else if (searchState is SearchError) {
+          return _buildError('Search Error ');
+        } else {
+          return _buildServiceProvidersList();
+        }
+      },
+    );
+  }
+
   Widget _buildSearchBar(
       BuildContext context, TextEditingController searchController) {
     return CustomSearchBar(
-      icon: const Icon(Icons.pin_drop),
       controller: searchController,
       hint: 'Search Skilled workers',
       onSearchChanged: (value) {
@@ -80,7 +88,8 @@ class ServiceProviderListingScreen extends StatelessWidget {
           onDetailsPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => PlumberProfileScreen(id: provider['id']),
+                builder: (ctx) =>
+                    ServiceProviderDetailsScreen(id: provider['id']),
               ),
             );
           },
@@ -130,7 +139,40 @@ class ServiceProviderListingScreen extends StatelessWidget {
           onDetailsPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => PlumberProfileScreen(id: provider['id']),
+                builder: (ctx) =>
+                    ServiceProviderDetailsScreen(id: provider['id']),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class DropDownCustom extends StatelessWidget {
+  const DropDownCustom({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ServiceProviderSearchBloc, ServiceProviderSearchState>(
+      builder: (context, searchState) {
+        return BlocBuilder<ServiceProviderBloc, ServiceProviderState>(
+          builder: (context, serviceProviderState) {
+            // Combine or use the states as needed
+            return Align(
+              alignment: Alignment.topRight,
+              child: DropDownMenuFb1(
+                onSelected: (String value) {
+                  if (searchState is SearchCompleted) {
+                  } else if (serviceProviderState is ServiceProviderLoaded) {
+                    if (searchState is SearchCompleted) {
+                      context.read<ServiceProviderSortingBloc>().add(
+                          ServiceProviderSortRequested(
+                              'price low to high', searchState.providers));
+                    }
+                  }
+                },
               ),
             );
           },

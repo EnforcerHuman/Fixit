@@ -27,7 +27,7 @@ class ProviderGridWidget extends StatelessWidget {
           rating: provider['rating'] ?? 4,
           onDetailsPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => PlumberProfileScreen(
+              builder: (ctx) => ServiceProviderDetailsScreen(
                 id: provider['id'],
               ),
             ));

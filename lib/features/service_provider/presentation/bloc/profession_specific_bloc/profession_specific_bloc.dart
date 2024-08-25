@@ -21,7 +21,7 @@ class ProfessionSpecificBloc
           serviceProviderDataSource.getProviderByProfession(event.query),
           onData: (data) => ProfessionSpecificLoaded(data),
         );
-      } catch (error, stackTrace) {
+      } catch (error) {
         // Emit an error state if data fetch fails.
         emit(ProfessionSpecificError(error.toString()));
       }

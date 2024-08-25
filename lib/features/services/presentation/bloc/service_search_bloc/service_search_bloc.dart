@@ -10,16 +10,11 @@ class ServiceSearchBloc extends Bloc<ServiceSearchEvent, ServiceSearchState> {
   final ServiceRemoteRepository serviceRemoteRepository;
   ServiceSearchBloc(this.serviceRemoteRepository)
       : super(ServiceSearchInitial()) {
-    on<ServiceSearchEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<SearchService>((event, emit) async {
       //
       try {
         List<ServicesModel> services =
             await serviceRemoteRepository.searchService(event.query);
-        print(services);
         emit(ServiceSearchCompleted(services));
       } catch (e) {
         emit(ServiceSearchError());

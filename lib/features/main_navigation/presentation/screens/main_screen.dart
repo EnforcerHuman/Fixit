@@ -1,6 +1,6 @@
 import 'package:fixit/features/Profile/presentation/screens/profile_screen.dart';
 import 'package:fixit/features/bookings/presentation/screens/all_bookings_screen.dart';
-import 'package:fixit/features/chats/presentation/screens/chat_screen.dart';
+import 'package:fixit/features/chat/presentation/pages/conversation_list_screen.dart';
 import 'package:fixit/features/home/presentation/screens/home_screen.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_bloc.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_event.dart';
@@ -27,7 +27,7 @@ class MainScreenContent extends StatelessWidget {
     HomeScreen(),
     const SearchByLocationScreen(),
     AllBookingsScreen(),
-    const ChatScreen(),
+    const ConversationListScreen(),
     const ProfileScreen(),
   ];
 

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.dart';
 import 'package:fixit/features/authentication/presentation/screens/otp_screen.dart';
-import 'package:fixit/features/home/presentation/screens/home_screen.dart';
 import 'package:fixit/features/main_navigation/presentation/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

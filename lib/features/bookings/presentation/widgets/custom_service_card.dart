@@ -5,10 +5,10 @@ class CustomServiceCard extends StatelessWidget {
   final String price;
 
   const CustomServiceCard({
-    Key? key,
+    super.key,
     required this.serviceType,
     required this.price,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

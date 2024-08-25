@@ -88,19 +88,8 @@ class ServiceProviderCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 //rating
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
-                        const SizedBox(width: 2),
-                        Text(
-                          rating.toStringAsFixed(1),
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
                     ElevatedButton(
                       onPressed: onDetailsPressed,
                       style: ElevatedButton.styleFrom(

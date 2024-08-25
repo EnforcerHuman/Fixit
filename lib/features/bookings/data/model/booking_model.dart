@@ -1,3 +1,5 @@
+// import 'package:fixit/features/bookings/data/model/adress_model.dart';
+
 import 'package:fixit/features/bookings/data/model/adress_model.dart';
 
 class BookingModel {
@@ -27,6 +29,7 @@ class BookingModel {
   final AddressModel address;
   final String hourlyPayment;
   final String totalPayment;
+  final List<String> orders; // New field
 
   BookingModel({
     required this.id,
@@ -53,8 +56,9 @@ class BookingModel {
     required this.statusUpdatedAt,
     this.expectedArrivalTime,
     required this.address,
-    required this.hourlyPayment, // Initialize new field
-    required this.totalPayment, // Initialize new field
+    required this.hourlyPayment,
+    required this.totalPayment,
+    required this.orders, // Initialize new field
   });
 
   factory BookingModel.fromMap(Map<String, dynamic> data, String documentId) {
@@ -85,8 +89,10 @@ class BookingModel {
       statusUpdatedAt: DateTime.parse(data['statusUpdatedAt'] as String),
       expectedArrivalTime: data['expectedArrivalTime'] as String?,
       address: AddressModel.fromMap(data['address'] as Map<String, dynamic>),
-      hourlyPayment: data['hourlyPayment'] as String, // Map new field
-      totalPayment: data['totalPayment'] as String, // Map new field
+      hourlyPayment: data['hourlyPayment'] as String,
+      totalPayment: data['totalPayment'] as String,
+      orders:
+          List<String>.from(data['orders'] as List<dynamic>), // Map new field
     );
   }
 
@@ -115,8 +121,9 @@ class BookingModel {
       'statusUpdatedAt': statusUpdatedAt.toIso8601String(),
       'expectedArrivalTime': expectedArrivalTime,
       'address': address.toMap(),
-      'hourlyPayment': hourlyPayment, // Add new field
-      'totalPayment': totalPayment, // Add new field
+      'hourlyPayment': hourlyPayment,
+      'totalPayment': totalPayment,
+      'orders': orders, // Add new field
     };
   }
 
@@ -145,8 +152,9 @@ class BookingModel {
     DateTime? statusUpdatedAt,
     String? expectedArrivalTime,
     AddressModel? address,
-    String? hourlyPayment, // Add new field
-    String? totalPayment, // Add new field
+    String? hourlyPayment,
+    String? totalPayment,
+    List<String>? orders, // Add new field
   }) {
     return BookingModel(
       id: id ?? this.id,
@@ -173,8 +181,9 @@ class BookingModel {
       statusUpdatedAt: statusUpdatedAt ?? this.statusUpdatedAt,
       expectedArrivalTime: expectedArrivalTime ?? this.expectedArrivalTime,
       address: address ?? this.address,
-      hourlyPayment: hourlyPayment ?? this.hourlyPayment, // Assign new field
-      totalPayment: totalPayment ?? this.totalPayment, // Assign new field
+      hourlyPayment: hourlyPayment ?? this.hourlyPayment,
+      totalPayment: totalPayment ?? this.totalPayment,
+      orders: orders ?? this.orders, // Assign new field
     );
   }
 }

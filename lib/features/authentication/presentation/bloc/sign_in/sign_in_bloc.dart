@@ -14,10 +14,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     GoogleAuth gauth = GoogleAuth();
     // PhoneAuthentication auth = PhoneAuthentication();
 
-    on<SignInEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<SignInUser>((event, emit) async {
       SignInUseCase signnInUseCase = SignInUseCase();
 
@@ -25,14 +21,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       try {
         UserCredential userCredential =
             await signnInUseCase.signIn(event.email, event.password);
-        print('Print form user sign in bloc');
-        print(userCredential.user?.uid);
         // AuthLocalDataService.setUserName(
         //     userCredential.user?.displayName ?? 'Test name');
         AuthLocalDataService.setUserKey(userCredential.user!.uid);
         bool isServiceProvider =
             await signnInUseCase.handleSignInSuccesss(userCredential);
-        if (isServiceProvider == false) {
+        if (isServiceProvider == true) {
           emit(SignInSuccess(isServiceProvider));
         } else {
           emit(SignInError('User not found or not valid'));

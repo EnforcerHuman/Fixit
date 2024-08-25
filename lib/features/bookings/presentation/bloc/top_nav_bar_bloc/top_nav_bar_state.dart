@@ -6,5 +6,5 @@ part of 'top_nav_bar_bloc.dart';
 class TopNavState {
   final int selectedIndex;
 
-  TopNavState(this.selectedIndex);
+  const TopNavState(this.selectedIndex);
 }

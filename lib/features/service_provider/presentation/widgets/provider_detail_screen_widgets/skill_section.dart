@@ -2,7 +2,7 @@ import 'package:fixit/features/service_provider/presentation/widgets/skill_chip.
 import 'package:flutter/material.dart';
 
 class SkillsSection extends StatelessWidget {
-  const SkillsSection({Key? key}) : super(key: key);
+  const SkillsSection({super.key});
 
   @override
   Widget build(BuildContext context) {

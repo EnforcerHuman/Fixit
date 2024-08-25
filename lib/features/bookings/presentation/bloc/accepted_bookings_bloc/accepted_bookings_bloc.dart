@@ -11,30 +11,20 @@ class AcceptedBookingsBloc
     extends Bloc<AcceptedBookingsEvent, AcceptedBookingsState> {
   final BookingUseCase bookingUseCase;
   AcceptedBookingsBloc(this.bookingUseCase) : super(AcceptedBookingsInitial()) {
-    on<AcceptedBookingsEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<GetAccceptedBooking>((event, emit) async {
       String userId = await AuthLocalDataService.getUserId();
-      print('USER ID :');
-      print(userId);
       try {
         await emit.forEach<List<BookingModel>>(
           bookingUseCase.getAcceptedBooking(userId),
           onData: (data) {
             // Print each booking in the received list
-            data.forEach((booking) {
-              print('Accepted Booking: $booking');
-            });
             return AcceptedBookingLoaded(data);
           },
           onError: (error, stackTrace) {
-            print('Error: $error');
             return AcceptedBookingError();
           },
         );
       } catch (e) {
-        print('Catch block error: $e');
         emit(AcceptedBookingError());
       }
     });

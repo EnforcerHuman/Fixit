@@ -125,25 +125,11 @@ class GoogleAuth {
             // You can add navigation logic here
           }
         } on FirebaseAuthException catch (e) {
-          // Handle Firebase Auth specific errors
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text('Login failed: ${e.message}'),
-          //     duration: Duration(seconds: 3),
-          //   ),
-          // );
+          //
         }
-      } else {
-        // Handle case where user cancels sign-in
-      }
+      } else {}
     } catch (e) {
-      // Handle other errors
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('An error occurred. Please try again.'),
-      //     duration: Duration(seconds: 3),
-      //   ),
-      // );
+      //handle exception
     }
   }
 }

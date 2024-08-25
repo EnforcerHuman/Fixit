@@ -29,7 +29,7 @@ class HomeScreenUseCases {
   void navigateToProviderDetails(BuildContext context, String id) {
     ServiceRemoteRepository().getServices();
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (ctx) => PlumberProfileScreen(id: id),
+      builder: (ctx) => ServiceProviderDetailsScreen(id: id),
     ));
   }
 }

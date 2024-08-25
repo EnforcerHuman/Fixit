@@ -2,7 +2,6 @@ import 'package:fixit/common/common_widgets/button.dart';
 import 'package:fixit/features/bookings/presentation/bloc/bookig_bloc/booking_bloc.dart';
 import 'package:fixit/features/bookings/presentation/screens/adress_collection_page.dart';
 import 'package:fixit/features/bookings/presentation/widgets/custom_service_card.dart';
-import 'package:fixit/features/bookings/presentation/widgets/upload_file_widget.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/provider_details_bloc/provider_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,11 +46,11 @@ class ServiceDetailsScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            UploadFileWidget(
-                                label: 'Upload Picture ',
-                                onTap: () {},
-                                color: Colors.blueAccent,
-                                boxText: 'upload')
+                            // UploadFileWidget(
+                            //     label: 'Upload Picture ',
+                            //     onTap: () {},
+                            //     color: Colors.blueAccent,
+                            //     boxText: 'upload')
                           ],
                         ),
                       ),

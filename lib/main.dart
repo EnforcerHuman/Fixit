@@ -1,4 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fixit/features/Profile/data/user_datasource.dart';
+import 'package:fixit/features/Profile/domain/usecases/user_details.dart';
+import 'package:fixit/features/Profile/presentation/bloc/user_details/user_details_bloc.dart';
 import 'package:fixit/features/authentication/data/datasources/firebase_phone_auth_services.dart';
 import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.dart';
 import 'package:fixit/features/authentication/presentation/bloc/forgot_password/forgot_password_bloc.dart';
@@ -13,6 +16,9 @@ import 'package:fixit/features/bookings/presentation/bloc/completed_booking_bloc
 import 'package:fixit/features/bookings/presentation/bloc/location/location_bloc.dart';
 import 'package:fixit/features/bookings/presentation/bloc/requested_bookings_bloc/requested_bookings_bloc.dart';
 import 'package:fixit/features/bookings/presentation/bloc/top_nav_bar_bloc/top_nav_bar_bloc.dart';
+import 'package:fixit/features/chat/data/data_source/firebase_chat_data_source.dart';
+import 'package:fixit/features/chat/presentation/bloc/chat_bloc/chat_bloc.dart';
+import 'package:fixit/features/chat/presentation/bloc/conversation_bloc/conversation_bloc.dart';
 import 'package:fixit/features/home/presentation/screens/splash_screen.dart';
 import 'package:fixit/features/main_navigation/presentation/bloc/bottom_navigation_bloc/bottom_navigation_bloc_bloc.dart';
 import 'package:fixit/features/payment/data/razor_pay_remote_data_source.dart';
@@ -20,11 +26,13 @@ import 'package:fixit/features/payment/presentation/bloc/bloc/payment_bloc.dart'
 import 'package:fixit/features/service_provider/data/data_sources/service_provider_data_source.dart';
 import 'package:fixit/features/service_provider/data/data_sources/service_provider_search.dart';
 import 'package:fixit/features/service_provider/domain/usecases/filter_provider_by_area.dart';
+import 'package:fixit/features/service_provider/presentation/bloc/bloc/provider_stats_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/profession_specific_bloc/profession_specific_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/providers_by_location/providers_by_location_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/search_bloc/service_provider_search_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/service_provider_bloc/service_provider_bloc.dart';
 import 'package:fixit/features/service_provider/presentation/bloc/provider_details_bloc/provider_details_bloc.dart';
+import 'package:fixit/features/service_provider/presentation/bloc/service_provider_sorting_bloc/service_provider_sorting_bloc.dart';
 import 'package:fixit/features/services/data/data_sources/service_remote_repository.dart';
 import 'package:fixit/features/services/presentation/bloc/service_search_bloc/service_search_bloc.dart';
 import 'package:fixit/features/services/presentation/bloc/services_bloc/services_bloc.dart';
@@ -95,7 +103,16 @@ class MyApp extends StatelessWidget {
             create: (context) => AcceptedBookingsBloc(BookingUseCase())),
         BlocProvider(create: (context) => PaymentBloc(RazorpayService())),
         BlocProvider(
-            create: (context) => CompletedBookingsBloc(BookingUseCase()))
+            create: (context) => CompletedBookingsBloc(BookingUseCase())),
+        BlocProvider(create: (context) => ChatBloc()),
+        BlocProvider(
+            create: (context) =>
+                UserDetailsBloc(UserDetails(UserDatasource()))),
+        BlocProvider(create: (context) => ServiceProviderSortingBloc()),
+        BlocProvider(
+            create: (context) => ConversationBloc(FirebaseChatDatasource())),
+        BlocProvider(
+            create: (context) => ProviderStatsBloc(ServiceProviderDataSource()))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

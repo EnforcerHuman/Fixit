@@ -57,7 +57,7 @@ class _SelectItemFieldState extends State<SelectItemField> {
                 ),
                 Text(
                   widget.text,
-                  style: TextStyle(color: Colors.black, fontSize: 15),
+                  style: const TextStyle(color: Colors.black, fontSize: 15),
                 ),
               ],
             ),

@@ -6,11 +6,11 @@ class ProviderInfoItem extends StatelessWidget {
   final String label;
 
   const ProviderInfoItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.value,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

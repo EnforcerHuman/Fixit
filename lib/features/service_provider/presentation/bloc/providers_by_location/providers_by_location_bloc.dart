@@ -10,10 +10,6 @@ class ProvidersByLocationBloc
   final GetProvidersWithinRadius getProvidersWithinRadius;
   ProvidersByLocationBloc(this.getProvidersWithinRadius)
       : super(ProvidersByLocationInitial()) {
-    on<ProvidersByLocationEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<GetProviderByLocation>((event, emit) async {
       //handling case where
       try {

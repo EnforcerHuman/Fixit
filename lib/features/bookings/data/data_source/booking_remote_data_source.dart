@@ -10,23 +10,19 @@ class BookingRemotedataSource {
           await firestore.collection('Bookings').add(bookingModel.toMap());
       String id = docref.id;
       firestore.collection('Bookings').doc(id).update({'id': id});
-      print("Booking details stored successfully");
     } catch (e) {
-      print("Error storing booking details: $e");
+      //handle exceptoin
     }
   }
 
   Stream<List<BookingModel>> getBookings(String userId) {
-    print('User Id from Remote data source : *************');
-    print(userId);
     return _firebaseFirestore
         .collection('Bookings')
         .where('userId', isEqualTo: userId)
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((docSnapshot) {
-        return BookingModel.fromMap(
-            docSnapshot.data() as Map<String, dynamic>, docSnapshot.id);
+        return BookingModel.fromMap(docSnapshot.data(), docSnapshot.id);
       }).toList();
     });
   }

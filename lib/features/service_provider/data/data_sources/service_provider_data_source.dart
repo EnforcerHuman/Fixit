@@ -10,6 +10,7 @@ class ServiceProviderDataSource {
         .map(
       (snapshot) {
         List<Map<String, dynamic>> providers = snapshot.docs
+            // ignore: unnecessary_cast
             .map((doc) => doc.data() as Map<String, dynamic>)
             .toList();
 
@@ -36,6 +37,7 @@ class ServiceProviderDataSource {
     return firebaseFirestore
         .collection('ServiceProviders')
         .where('serviceArea', isGreaterThanOrEqualTo: query)
+        // ignore: prefer_interpolation_to_compose_strings
         .where('serviceArea', isLessThan: query + 'z')
         .snapshots()
         .map((querySnapshot) {
@@ -45,5 +47,22 @@ class ServiceProviderDataSource {
         return data;
       }).toList();
     });
+  }
+
+  Stream<int> getProviderTotalBookings(String id) {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    try {
+      return firebaseFirestore
+          .collection('Bookings')
+          .where('status', isEqualTo: 'Completed')
+          .where('serviceProviderId', isEqualTo: id)
+          .snapshots()
+          .map((querySnapshot) {
+        return querySnapshot.docs.length;
+      });
+    } catch (e) {
+      // Log the error here
+      return Stream.value(0);
+    }
   }
 }

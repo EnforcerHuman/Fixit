@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    final _formkey = GlobalKey<FormState>();
+    final formkey = GlobalKey<FormState>();
 
     HandleAuthResultUseCase handleAuthResultUseCase =
         HandleAuthResultUseCaseImpl();
@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Form(
-                          key: _formkey,
+                          key: formkey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                               RoundButton(
                                 title: 'Sign In',
                                 onPressed: () async {
-                                  if (_formkey.currentState!.validate()) {
+                                  if (formkey.currentState!.validate()) {
                                     context.read<SignInBloc>().add(SignInUser(
                                         emailController.text,
                                         passwordController.text));

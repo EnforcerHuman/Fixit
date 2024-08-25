@@ -7,13 +7,12 @@ class CustomSearchBar extends StatelessWidget {
   final VoidCallback onIconPressed;
   final Icon? icon;
   const CustomSearchBar(
-      {Key? key,
+      {super.key,
       required this.onSearchChanged,
       required this.hint,
       required this.controller,
       required this.onIconPressed,
-      this.icon})
-      : super(key: key);
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class CustomSearchBar extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           hintText: hint,
-          prefixIcon: Icon(Icons.search, color: Colors.grey),
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
           suffixIcon: IconButton(
             onPressed: onIconPressed,
             icon: icon ??
@@ -36,12 +35,12 @@ class CustomSearchBar extends StatelessWidget {
           ),
           filled: true,
           fillColor: Colors.white,
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+          contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.0),
             borderSide: BorderSide.none,
           ),
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey),
         ),
       ),
     );

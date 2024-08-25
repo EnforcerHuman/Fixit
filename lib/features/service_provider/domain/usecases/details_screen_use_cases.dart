@@ -7,11 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProviderDetailsScreenUseCases {
   void handleBookButtonPress(
       BuildContext context, ProviderDetailsLoaded state) {
-    print('print from usecase');
-    print(state.providerDetails);
-    print(state.providerDetails['name']);
-    print(state.providerDetails['id']);
-    print(state.providerDetails['hourlyPay']);
     context
         .read<BookingBloc>()
         .add(UpdateHourlyPayment(state.providerDetails['hourlyPay']));

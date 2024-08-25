@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmeringContainer extends StatelessWidget {
+  const ShimmeringContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
-      period: Duration(milliseconds: 1500), // Adjust the speed of the effect
+      period:
+          const Duration(milliseconds: 1500), // Adjust the speed of the effect
       child: Container(
         width: 100,
         height: 60,
@@ -22,13 +25,13 @@ class ShimmeringContainer extends StatelessWidget {
               width: 80,
               height: 10,
               color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             ),
             Container(
               width: 60,
               height: 10,
               color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             ),
           ],
         ),

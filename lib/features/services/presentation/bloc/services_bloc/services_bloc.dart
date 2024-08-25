@@ -9,17 +9,13 @@ part 'services_state.dart';
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final ServiceRemoteRepository serviceRemoteRepository;
   ServicesBloc(this.serviceRemoteRepository) : super(ServicesInitial()) {
-    on<ServicesEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<GetServices>((event, emit) async {
       emit(ServicesLoading());
       try {
         await emit.forEach<List<ServicesModel>>(
             serviceRemoteRepository.getServices(),
-            onData: (Services) => ServicesLoaded(Services));
-        onError(error, stackTrace) => ServicesError(error.toString());
+            onData: (services) => ServicesLoaded(services),
+            onError: (error, stackTrace) => ServicesError(error.toString()));
       } catch (e) {
         emit(ServicesError(e.toString()));
       }

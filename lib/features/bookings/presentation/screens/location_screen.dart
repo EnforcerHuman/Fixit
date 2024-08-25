@@ -21,7 +21,6 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CheckDistance checkDistance = CheckDistance();
-    print('latitude from details : $latitude');
 
     // Use nullable variables
     double? userLatitude;
@@ -50,8 +49,6 @@ class LocationScreen extends StatelessWidget {
               child: RoundButton(
                 title: 'Update Service Location',
                 onPressed: () {
-                  print(userLongitude);
-                  print(userLatitude);
                   if (userLatitude != null && userLongitude != null) {
                     bool isServicable = checkDistance.execute(
                         latitude, longitude, userLatitude!, userLongitude!);
@@ -70,7 +67,7 @@ class LocationScreen extends StatelessWidget {
                                 'Unfortunately, the selected provider does not service your area. Please try selecting a different provider or check back later.'),
                             actions: <Widget>[
                               TextButton(
-                                child: Text('Cancel'),
+                                child: const Text('Cancel'),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
@@ -91,9 +88,7 @@ class LocationScreen extends StatelessWidget {
                         },
                       );
                     }
-                  } else {
-                    print('No location selected.');
-                  }
+                  } else {}
                 },
               ),
             ),

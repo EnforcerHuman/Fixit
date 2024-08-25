@@ -10,18 +10,16 @@ class ServiceProviderSearchBloc
   final ServiceProviderSearchDataSource serviceProviderSearchDataSource;
   ServiceProviderSearchBloc(this.serviceProviderSearchDataSource)
       : super(ServiceProviderSearchInitial()) {
-    on<ServiceProviderSearchEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<ServiceProviderSearch>((event, emit) async {
       ///
       try {
         List<Map<String, dynamic>> providers =
             await serviceProviderSearchDataSource
                 .searchServiceProviders(event.query);
-        print(providers);
         emit(SearchCompleted(providers));
-      } catch (e) {}
+      } catch (e) {
+        //handle exception
+      }
     });
   }
 }

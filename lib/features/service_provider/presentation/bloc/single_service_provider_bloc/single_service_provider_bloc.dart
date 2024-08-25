@@ -10,10 +10,6 @@ class SingleServiceProviderBloc
   final ServiceProviderDataSource serviceProviderDataSource;
   SingleServiceProviderBloc(this.serviceProviderDataSource)
       : super(SingleServiceProviderInitial()) {
-    on<SingleServiceProviderEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<GetSingleServiceProvider>((event, emit) {
       //
     });

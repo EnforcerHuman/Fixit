@@ -10,9 +10,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpBloc() : super(SignUpInitial()) {
     GoogleAuth gauth = GoogleAuth();
     PhoneAuthentication auth = PhoneAuthentication();
-    on<SignUpEvent>((event, emit) {
-      // TODO: implement event handler
-    });
 
     on<SendOTPEvent>((event, emit) async {
 //
@@ -21,7 +18,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         String id = await auth.sendOTP(
           event.phone,
         );
-        print('id from bloc $id');
         emit(OTPSentState(id, event.password, id, event.email));
       } catch (e) {
         emit(SignUpErrorState(''));

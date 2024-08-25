@@ -7,8 +7,7 @@ import 'package:fixit/features/service_provider/presentation/screen/profession_s
 class ServiceListingGrid extends StatelessWidget {
   final List<ServicesModel> services;
 
-  const ServiceListingGrid({Key? key, required this.services})
-      : super(key: key);
+  const ServiceListingGrid({super.key, required this.services});
 
   @override
   Widget build(BuildContext context) {

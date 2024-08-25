@@ -11,9 +11,6 @@ class ProviderDetailsBloc
 
   ProviderDetailsBloc(this.serviceProviderDataSource)
       : super(ProviderDetailsInitial()) {
-    on<ProviderDetailsEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<GetProviderDetails>((event, emit) async {
       emit(ProviderDetailsLoading());
       try {

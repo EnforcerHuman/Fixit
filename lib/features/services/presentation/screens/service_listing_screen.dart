@@ -31,7 +31,13 @@ class ServiceListingScreen extends StatelessWidget {
               child: BlocBuilder<ServiceSearchBloc, ServiceSearchState>(
                 builder: (context, searchState) {
                   if (searchState is ServiceSearchCompleted) {
-                    return SearchResultsGrid(services: searchState.services);
+                    if (searchState.services.isEmpty) {
+                      return const Center(
+                        child: Text('NO RESULTS FOUND'),
+                      );
+                    } else {
+                      return SearchResultsGrid(services: searchState.services);
+                    }
                   } else if (searchState is ServiceSearchFailed) {
                     return const Center(child: Text('No services found'));
                   } else if (searchState is ServiceSearchError) {

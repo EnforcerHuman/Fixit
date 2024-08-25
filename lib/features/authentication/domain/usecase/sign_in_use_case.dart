@@ -9,7 +9,6 @@ class SignInUseCase {
     try {
       UserCredential userCredential = await firebaseauth.login(email, password);
 
-      print(userCredential.user?.uid);
       return userCredential;
     } catch (e) {
       throw Exception('Error signing in: $e');
@@ -20,13 +19,15 @@ class SignInUseCase {
     FirestoreDataServices firestoreDataServices = FirestoreDataServices();
     Map<String, dynamic>? userDetails = await firestoreDataServices
         .getUserDetailsById(userCredential.user!.uid);
-    print('**88888888888888888888888');
-    print(userCredential.user?.uid);
     // AuthLocalDataService.setUserName(userDetails?['id']);
-    if (userDetails?['isServiceProvider'] == true) {
+    if (userDetails?['isServiceProvider'] == false) {
       AuthLocalDataService.setLoginStatus(true);
       AuthLocalDataService.setUserKey(userDetails?['id']);
+      AuthLocalDataService.setUserName(userDetails?['name']);
+      return true;
+    } else {
+      return false;
     }
-    return userDetails?['isServiceProvider'] ?? false;
+    // return userDetails?['isServiceProvider'] ?? false;
   }
 }

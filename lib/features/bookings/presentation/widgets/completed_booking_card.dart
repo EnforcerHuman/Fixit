@@ -23,7 +23,6 @@ class CompletedBookingCard extends StatelessWidget {
         final isSmallScreen = width < 600;
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue, width: 2), // Blue border
             borderRadius: BorderRadius.circular(12),
           ),
           child: Card(
@@ -53,9 +52,9 @@ class CompletedBookingCard extends StatelessWidget {
                   SizedBox(height: isSmallScreen ? 12 : 16),
                   _buildInfoRow(
                       'Total Amount', '₹${amount.toStringAsFixed(2)}'),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildInfoRow('Booking date', bookingDate),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildInfoRow('Provider name', partnerName, isBlue: true),
                   SizedBox(height: isSmallScreen ? 16 : 24),
                 ],

@@ -1,7 +1,8 @@
-import 'dart:math';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:fixit/common/common_widgets/button.dart';
 import 'package:fixit/common/common_widgets/text_editing_field.dart';
+import 'package:fixit/features/authentication/data/datasources/auth_local%20_data_service.dart';
 import 'package:fixit/features/bookings/data/model/adress_model.dart';
 import 'package:fixit/features/bookings/presentation/bloc/bookig_bloc/booking_bloc.dart';
 import 'package:fixit/features/bookings/presentation/widgets/custom_calender.dart';
@@ -28,28 +29,7 @@ class AdressCollectionPage extends StatelessWidget {
       body: BlocConsumer<BookingBloc, BookingState>(
         listener: (context, state) {
           if (state is BookingDataSubmited) {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctx) => const MainScreen()),
-                (route) => false);
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Booking Request submitted'),
-                  content: const Text(
-                      'Your request has been sent to service provider . We will update you once your request has been completed'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('OK'),
-                      onPressed: () {
-                        // Handle the 'Proceed' action
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
+            _showSubmissionDialog(context);
           }
         },
         builder: (context, state) {
@@ -85,7 +65,6 @@ class AdressCollectionPage extends StatelessWidget {
                           String formattedDate =
                               DateFormat('yyyy-MM-dd').format(args.value);
                           bookingDate = formattedDate;
-                          print(bookingDate);
                         }
                       },
                     ),
@@ -95,16 +74,20 @@ class AdressCollectionPage extends StatelessWidget {
                     width: double.infinity,
                     child: RoundButton(
                         title: 'submit',
-                        onPressed: () {
+                        onPressed: () async {
                           AddressModel adress = AddressModel(
                               completeAddress: complteAdressController.text,
                               houseNumber: houseNumberController.text,
                               streetNumber: streetNumberController.text);
+                          String username =
+                              await AuthLocalDataService.getUserName();
+                          context
+                              .read<BookingBloc>()
+                              .add(UpdateUserName(username));
                           context.read<BookingBloc>().add(UpdateAdress(adress));
                           context
                               .read<BookingBloc>()
                               .add(UpdateBookingDateTime(bookingDate));
-
                           context.read<BookingBloc>().add(SubmitBookingData());
                         }),
                   ),
@@ -116,4 +99,29 @@ class AdressCollectionPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showSubmissionDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Booking Request Submitted'),
+        content: const Text(
+          'Your request has been sent to the service provider. We will update you once your request has been completed.',
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (ctx) => const MainScreen()),
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

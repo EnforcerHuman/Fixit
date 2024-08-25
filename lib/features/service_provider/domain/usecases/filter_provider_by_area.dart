@@ -18,7 +18,7 @@ class GetProvidersWithinRadius {
     // Filter providers within the specified radius
     List<Map<String, dynamic>> filteredProviders = providers.where((provider) {
       // Check if provider and location exist
-      if (provider == null || provider['location'] == null) {
+      if (provider.isEmpty || provider['location'] == null) {
         return false;
       }
 
@@ -34,13 +34,8 @@ class GetProvidersWithinRadius {
       double distance = DistanceCalculator.calculateDistance(
           userLat, userLon, providerLat, providerLon);
 
-      print('Provider: ${provider['name']}, Distance: ${distance / 1000} km');
-
       return distance <= radiusInMeters;
     }).toList();
-
-    print('Total providers: ${providers.length}');
-    print('Filtered providers: ${filteredProviders.length}');
 
     return filteredProviders;
   }

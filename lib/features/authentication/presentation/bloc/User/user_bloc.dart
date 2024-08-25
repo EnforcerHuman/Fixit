@@ -10,6 +10,7 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitial()) {
     UserRepository userRepo = UserRepository();
+    // ignore: no_leading_underscores_for_local_identifiers
     UserModel _user = UserModel(
       email: '',
       id: '',

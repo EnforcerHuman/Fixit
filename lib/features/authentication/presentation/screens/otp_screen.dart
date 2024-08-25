@@ -1,8 +1,9 @@
 import 'package:fixit/common/common_widgets/button.dart';
+import 'package:fixit/features/authentication/data/datasources/auth_local%20_data_service.dart';
 import 'package:fixit/features/authentication/presentation/bloc/User/user_bloc.dart';
 import 'package:fixit/features/authentication/presentation/bloc/sign_up_bloc/sign_up_bloc.dart';
 import 'package:fixit/features/authentication/presentation/widgets/otp_sending.dart';
-import 'package:fixit/features/home/presentation/screens/home_screen.dart';
+import 'package:fixit/features/main_navigation/presentation/screens/main_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,6 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('verification id from otp screen : $verificationId');
     TextEditingController controller = TextEditingController();
 
     return Scaffold(
@@ -37,9 +37,10 @@ class OtpScreen extends StatelessWidget {
             context
                 .read<UserBloc>()
                 .add(UpdateUserId(state.userCredential.user!.uid));
+            AuthLocalDataService.setUserKey(state.userCredential.user!.uid);
             context.read<UserBloc>().add(SubmitUserDate());
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (ctx) => HomeScreen()),
+                MaterialPageRoute(builder: (ctx) => const MainScreen()),
                 (route) => false);
           }
         },
@@ -93,7 +94,7 @@ class OtpScreen extends StatelessWidget {
                         onPressed: () {
                           //logic to send otp again
                         },
-                        child: Text('send again')),
+                        child: const Text('send again')),
                   ],
                 )
               ],

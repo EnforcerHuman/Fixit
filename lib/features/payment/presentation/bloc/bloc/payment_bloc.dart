@@ -1,5 +1,4 @@
 import 'package:fixit/features/payment/data/booking_status_updater.dart';
-import 'package:fixit/features/payment/data/payment_options_model.dart';
 import 'package:fixit/features/payment/data/razor_pay_remote_data_source.dart';
 import 'package:fixit/features/payment/presentation/bloc/bloc/payment_event.dart';
 import 'package:fixit/features/payment/presentation/bloc/bloc/payment_state.dart';
@@ -19,7 +18,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
     on<MakePayment>((event, emit) {
       bookingId = event.bookingid;
-      print('booking id form MAKe PYMENT $bookingId');
       try {
         razorpayService.openCheckout(event.options);
       } catch (e) {
@@ -28,7 +26,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     });
 
     on<PaymentSuccessEvent>((event, emit) async {
-      print('on PAYMENT SUCCESS TRIGGERD :');
       BookingStatusUpdater bookingStatusUpdater = BookingStatusUpdater();
       await bookingStatusUpdater.updatePaymentStatus(bookingId);
       emit(PaymentSuccess(event.response));

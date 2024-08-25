@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SkillChip extends StatelessWidget {
   final String label;
 
-  const SkillChip({Key? key, required this.label}) : super(key: key);
+  const SkillChip({super.key, required this.label});
 
   @override
   Widget build(BuildContext context) {

@@ -1,49 +1,41 @@
 import 'package:flutter/material.dart';
 
-class CustomDropdownExample extends StatefulWidget {
-  @override
-  _CustomDropdownExampleState createState() => _CustomDropdownExampleState();
-}
-
-class _CustomDropdownExampleState extends State<CustomDropdownExample> {
-  String? selectedValue;
-  List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
+class DropDownMenuFb1 extends StatelessWidget {
+  final Color color;
+  final Widget icon;
+  final Function(String) onSelected;
+  const DropDownMenuFb1({
+    this.color = Colors.white,
+    this.icon = const Icon(
+      Icons.more_vert,
+      color: Colors.black,
+    ),
+    required this.onSelected,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Custom Dropdown Button Example'),
-      ),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: Colors.blue, width: 2),
-          ),
-          child: DropdownButton<String>(
-            hint: Text('Select an item'),
-            value: selectedValue,
-            isExpanded: true,
-            icon: Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            underline: SizedBox(),
-            style: TextStyle(color: Colors.blue, fontSize: 18),
-            items: items.map((String item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Text(item),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedValue = newValue;
-              });
-            },
+    return PopupMenuButton<String>(
+      color: color,
+      icon: icon,
+      onSelected: onSelected,
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: 'price low to high',
+          child: Text(
+            'price low to high',
+            style: TextStyle(color: Colors.black),
           ),
         ),
-      ),
+        const PopupMenuItem<String>(
+          value: 'experience',
+          child: Text(
+            'experience',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
     );
   }
 }

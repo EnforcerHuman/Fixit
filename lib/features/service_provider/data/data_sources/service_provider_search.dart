@@ -11,6 +11,7 @@ class ServiceProviderSearchDataSource {
       QuerySnapshot querySnapshot = await firestore
           .collection('ServiceProviders')
           .where('name', isGreaterThanOrEqualTo: query)
+          // ignore: prefer_interpolation_to_compose_strings
           .where('name', isLessThan: query + 'z')
           .get();
 
@@ -22,7 +23,6 @@ class ServiceProviderSearchDataSource {
 
       return results;
     } catch (e) {
-      print("Error performing search: $e");
       return [];
     }
   }

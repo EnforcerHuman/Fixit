@@ -9,7 +9,7 @@ import 'package:fixit/features/authentication/data/model/user_model.dart';
 String verId = '';
 
 class PhoneAuthentication {
-  createUser usercreation = createUser();
+  CreateUser usercreation = CreateUser();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirestoreDataServices firestoreDataServices = FirestoreDataServices();
 
@@ -18,48 +18,32 @@ class PhoneAuthentication {
     await _auth.verifyPhoneNumber(
       phoneNumber: "+91$phone	",
       timeout: const Duration(seconds: 40),
-      verificationCompleted: (credential) {
-        print('Verification completed automatically');
-      },
-      verificationFailed: (e) {
-        print('Verification failed: ${e.message}');
-      },
+      verificationCompleted: (credential) {},
+      verificationFailed: (e) {},
       codeSent: (verificationId, responseToken) {
         completer.complete(verificationId);
-        print('Verification ID from auth remore data source: $verificationId');
         // Handle the verification ID as needed
       },
-      codeAutoRetrievalTimeout: (verificationId) {
-        print('Auto retrieval timeout: $verificationId');
-      },
+      codeAutoRetrievalTimeout: (verificationId) {},
     );
-    print('returned id : $completer');
     return completer.future;
   }
 
   Future<UserCredential> verifyOTP(
       String otp, String verificationId, String email, String password) async {
-    print(email);
     try {
-      print('Attempting to verify OTP...');
       PhoneAuthCredential phoneCredential = PhoneAuthProvider.credential(
         verificationId: verificationId, // Use the actual verificationId
         smsCode: otp, // Use the actual OTP entered by the user
       );
-      print('Phone credential created');
 
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(phoneCredential);
-      print(
-          'Phone authentication successful. User ID: ${userCredential.user?.uid}');
 
       await linkEmailPassword(email, password);
-      print('Email and password linked successfully');
 
-      print('OTP verification and account linking completed successfully');
       return userCredential;
     } catch (e) {
-      print('Authentication failed. Error: $e');
       throw Exception('Error verifying OTP: $e');
     }
   }
@@ -93,7 +77,6 @@ class PhoneAuthentication {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorMessage = _getFirebaseAuthErrorMessage(e);
-      print(errorMessage);
       throw errorMessage; // Throw a string instead of rethrowing the exception
     } catch (e) {
       throw 'An unexpected error occurred. Please try again.';
@@ -114,20 +97,15 @@ class PhoneAuthentication {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      print('Password reset email sent to $email');
     } catch (e) {
-      print('Error sending password reset email: $e');
       // Handle specific errors here
       if (e is FirebaseAuthException) {
         switch (e.code) {
           case 'user-not-found':
-            print('No user found for that email.');
             break;
           case 'invalid-email':
-            print('The email address is badly formatted.');
             break;
           default:
-            print('An unknown error occurred.');
         }
       }
     }

@@ -12,33 +12,21 @@ class RequestedBookingsBloc
   final BookingUseCase bookingUseCase;
   RequestedBookingsBloc(this.bookingUseCase)
       : super(RequestedBookingsInitial()) {
-    on<RequestedBookingsEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<GetRequestedBooking>((event, emit) async {
       // Handle the getrequested booking event
-      print('GetRequestedBooking event triggered');
       String userId = await AuthLocalDataService.getUserId();
 
       try {
         await emit.forEach<List<BookingModel>>(
           bookingUseCase.getPendingBooking(userId),
           onData: (data) {
-            print('Data received: $data');
-
-            for (var booking in data) {
-              print('Booking details: ${booking.toString()}');
-            }
-
             return RequestedBookingLoaded(data);
           },
           onError: (error, stackTrace) {
-            print('Error occurred: ${error?.toString() ?? 'Unknown error'}');
-            return RequestedBookingError(error.toString() ?? 'Unknown error');
+            return RequestedBookingError(error.toString());
           },
         );
       } catch (e) {
-        print('Exception caught: ${e.toString()}');
         emit(RequestedBookingError(e.toString()));
       }
     });

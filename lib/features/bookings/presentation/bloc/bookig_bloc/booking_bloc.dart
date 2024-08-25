@@ -39,22 +39,16 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         statusUpdatedAt: DateTime.now(),
         address: AddressModel(
             houseNumber: '', streetNumber: '', completeAddress: ''),
-        // hourlyPayment: '',
         paymentMethod: '',
         hourlyPayment: '',
-        totalPayment: '' // Timestamp when the status was last updated
-        );
+        totalPayment: '',
+        orders: []);
 
-    on<BookingEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<UpdateBookingId>((event, emit) {
       booking = booking.copyWith(id: event.bookingId);
     });
     on<UpdateServiceProviderId>((event, emit) {
       booking = booking.copyWith(serviceProviderId: event.serviceProviderId);
-      print('service provider iD :');
-      print(booking.serviceProviderId);
     });
     on<UpdateServiceProviderName>((event, emit) {
       booking =
@@ -99,7 +93,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         bookingRemotedataSource.storeBookingDetails(booking);
         emit(BookingDataSubmited());
       } catch (e) {
-        print(e);
+//handle exception
       }
     });
   }

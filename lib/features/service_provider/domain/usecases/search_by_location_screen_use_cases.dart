@@ -6,6 +6,6 @@ class SearchByLocationScreenUseCases {
       double userLongitude, BuildContext context, double userLatitude) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => CurrentLocationProviders(
-            latitude: userLatitude, longitude: userLongitude!)));
+            latitude: userLatitude, longitude: userLongitude)));
   }
 }

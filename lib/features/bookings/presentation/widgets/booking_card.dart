@@ -1,4 +1,3 @@
-import 'package:fixit/common/common_widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class BookingCard extends StatelessWidget {
@@ -24,7 +23,6 @@ class BookingCard extends StatelessWidget {
         final isSmallScreen = width < 600;
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue, width: 2), // Blue border
             borderRadius: BorderRadius.circular(12),
           ),
           child: Card(
@@ -54,16 +52,22 @@ class BookingCard extends StatelessWidget {
                   SizedBox(height: isSmallScreen ? 12 : 16),
                   _buildInfoRow(
                       'Amount per hour', '₹${amount.toStringAsFixed(2)}'),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildInfoRow('Booking date', bookingDate),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   _buildInfoRow('Provider name', partnerName, isBlue: true),
                   SizedBox(height: isSmallScreen ? 16 : 24),
-                  SizedBox(
-                      width: double.infinity,
-                      child: RoundButton(
-                          title: 'Contact Partner',
-                          onPressed: onButtonPressed)),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     TextButton(
+                  //         onPressed: onButtonPressed,
+                  //         child: const Text(
+                  //           "cancel booking request",
+                  //           selectionColor: Colors.red,
+                  //         )),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
